@@ -1,0 +1,65 @@
+<html>
+
+<head>
+	<script src="http://underscorejs.org/underscore-min.js"></script>
+	<script language="JavaScript">
+		function trading (form) {
+			arr_my_missing = form.my_missing.value.replace(/,/g, ' ').replace(/\s{1,}/g, ' ').split(" ");
+			arr_my_double = form.my_double.value.replace(/,/g, ' ').replace(/\s{1,}/g, ' ').split(" ");
+			arr_your_double = form.your_double.value.replace(/,/g, ' ').replace(/\s{1,}/g, ' ').split(" ");
+			arr_your_missing = form.your_missing.value.replace(/,/g, ' ').replace(/\s{1,}/g, ' ').split(" ");
+
+			form.my_missing.value = arr_my_missing.join(" ")
+			form.my_double.value = arr_my_double.join(" ")
+			form.your_double.value = arr_your_double.join(" ")
+			form.your_missing.value = arr_your_missing.join(" ")
+
+			document.getElementById("count_my_missing").innerHTML = " (" + arr_my_missing.length + ")"
+			document.getElementById("count_my_double").innerHTML = " (" + arr_my_double.length + ")"
+			document.getElementById("count_your_double").innerHTML = " (" + arr_your_double.length + ")"
+			document.getElementById("count_your_missing").innerHTML = " (" + arr_your_missing.length + ")"
+			
+			document.getElementById("output").innerHTML = "Tauschpartner hat folgende Sticker (" + _.intersection(arr_my_missing, arr_your_double).length + ") für dich: " + _.intersection(arr_my_missing, arr_your_double).join(", ");
+			document.getElementById("output2").innerHTML = "Du hast folgende Sticker für den Tauschpartner (" + _.intersection(arr_my_double, arr_your_missing).length + ") : " + _.intersection(arr_my_double, arr_your_missing).join(", ");
+		}
+	</script>
+</head>
+
+<body>
+<form name="trade">
+Deine fehlenden Sticker<span id="count_my_missing"></span><br>
+<textarea name="my_missing" rows="6" cols="180">
+5 9 10 11 12 13 14 16 24 28 31 37 38 39 43 46 47 48 56 61 62 71 75 76 81 84 86 88 93 98 99 
+104 106 110 112 113 120 122 123 124 125 126 129 131 135 137 141 142 153 160 161 164 165 171 172 174 181 193 194 198 
+204 206 208 209 216 228 230 231 233 239 240 243 247 251 252 253 254 255 259 262 268 277 278 281 
+316 318 322 326 327 330 331 338 342 343 345 347 349 352 355 357 359 365 371 375 376 378 383 384 386 388 389 391 392 393 395 
+400 401 410 413 418 422 423 426 427 432 439 442 451 452 458 460 461 462 463 464 469 470 472 473 481 482 489 
+505 506 509 515 517 520 531 533 536 545 551 555 558 569 570 572 574 575 576 578 584 594 597 
+601 604 605 607 608 610 611 613 623 625 629 630 632 633 634 636 638 642 643 646 650 651 661 663 664 665 668 669 677 
+</textarea>
+<br>
+Deine doppelten Sticker<span id="count_my_double"></span><br>
+<textarea name="my_double" rows="4" cols="180">
+17 21 26 32 35 42 45 58 66 67 69 69 83 85 89 
+108 115 132 136 159 168 178 185 190 190 199 
+207 212 232 241 260 265 266 269 271 272 276 279 280 283 283 284 284 285 294 298 
+300 302 302 305 306 309 312 315 335 361 370 394 
+406 411 425 441 444 448 449 456 467 467 475 477 483 484 485 485 491 494 497 
+502 502 507 507 507 516 526 534 534 547 548 549 549 549 549 550 552 559 560 560 560 563 564 568 568 589 591 595 596 
+602 609 609 609 619 620 628
+</textarea>
+<br><br>
+Tauschpartner sucht folgende Sticker<span id="count_your_missing"></span><br>
+<textarea name="your_missing" rows="3" cols="180">
+</textarea>
+<br>
+Tauschpartner bietet folgende Sticker<span id="count_your_double"></span><br>
+<textarea name="your_double" rows="3" cols="180">
+</textarea>
+<br><br>
+<input type="button" name="button" Value="Tausch prüfen" onClick="trading(this.form)">
+</form>
+<p id="output"></p>
+<p id="output2"></p>
+</body>
+</html>
